@@ -8,11 +8,14 @@ import {
 } from "./Lista.style";
 import { Button } from "@mui/material";
 import { Pet } from "../../../data/@types/Pet";
+import { TextService } from "../../../data/services/TextService";
 interface ListaProps {
   pets: Pet[];
 }
 
 function Lista(props: ListaProps) {
+  const limiteTexto = 150;
+
   return (
     <>
       <ListaStyle>
@@ -21,7 +24,9 @@ function Lista(props: ListaProps) {
             <FotoStyle src={pet.foto} alt="Adote um pet" />
             <CaixaInformacoes>
               <NomeStyle>{pet.nome}</NomeStyle>
-              <DescricaoStyle>{pet.historia}</DescricaoStyle>
+              <DescricaoStyle>
+                {TextService.limitaTexto(pet.historia, limiteTexto)}
+              </DescricaoStyle>
 
               <Button variant={"contained"} fullWidth>
                 Adotar {pet.nome}
