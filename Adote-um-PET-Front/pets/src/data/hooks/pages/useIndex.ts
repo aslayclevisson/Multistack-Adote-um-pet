@@ -1,26 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pet } from '../../@types/Pet';
+import { ApiService } from '../../services/ApiService';
 
 function useIndex(){
-    const [listaPets, setListaPets] = useState([
-        {
-            id: 1,
-            nome: "Bobby",
-            historia:
-            "Um cachorro muito bem cuidado e...... Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi ullam ex ducimus, deleniti architecto, saepe eligendi consequatur amet, atque perferendis quod unde quae! Ipsa magni fugit debitis omnis consequatur rem!",
-            foto: "https://veja.abril.com.br/wp-content/uploads/2017/01/cao-labrador-3-copy.jpg",
-        },
-        {
-            id: 2,
-            nome: "Scobby",
-            historia: "Cachorro cheiroso e alegre",
-            foto: "https://veja.abril.com.br/wp-content/uploads/2017/01/cao-labrador-3-copy.jpg",
-        },
-    ]),
+    const [listaPets, setListaPets] = useState([]),
     [petSelecionado, setPetSelecionado] = useState<Pet | null>(null),
     [email, setEmail] = useState(''),
     [valor, setValor] = useState(''),
     [mensagem, setMensagem] = useState('ugauga');
+    
+    /* ao preencher a lista com uma variável, vai indicar que quando aquela
+    variável for alterada, a função acima é executada 
+    caso contrário, a função vai ser executada assim que algum componente renderizar*/
+    useEffect(()=>{
+        ApiService.get('pets/')
+        .then((resposta) => {setListaPets(resposta.data);})
+    }, []) 
 
     function adotar(){}
 
