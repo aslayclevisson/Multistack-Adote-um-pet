@@ -7,30 +7,28 @@ import {
   DescricaoStyle,
 } from "./Lista.style";
 import { Button } from "@mui/material";
+import { Pet } from "../../../data/@types/Pet";
+interface ListaProps {
+  pets: Pet[];
+}
 
-function Lista() {
+function Lista(props: ListaProps) {
   return (
     <>
       <ListaStyle>
-        <ItemListaStyle>
-          <FotoStyle
-            src="https://veja.abril.com.br/wp-content/uploads/2017/01/cao-labrador-3-copy.jpg"
-            alt="Adote um pet"
-          />
-          <CaixaInformacoes>
-            <NomeStyle>Adote um pet</NomeStyle>
-            <DescricaoStyle>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quia
-              asperiores fugit, eligendi veniam cupiditate explicabo sed autem?
-              Deleniti aut eos fugiat dignissimos tempora in suscipit corrupti
-              adipisci quam, eveniet quod?
-            </DescricaoStyle>
+        {props.pets.map((pet) => (
+          <ItemListaStyle key={pet.id}>
+            <FotoStyle src={pet.foto} alt="Adote um pet" />
+            <CaixaInformacoes>
+              <NomeStyle>{pet.nome}</NomeStyle>
+              <DescricaoStyle>{pet.historia}</DescricaoStyle>
 
-            <Button variant={"contained"} fullWidth>
-              Adotar
-            </Button>
-          </CaixaInformacoes>
-        </ItemListaStyle>
+              <Button variant={"contained"} fullWidth>
+                Adotar {pet.nome}
+              </Button>
+            </CaixaInformacoes>
+          </ItemListaStyle>
+        ))}
       </ListaStyle>
     </>
   );
