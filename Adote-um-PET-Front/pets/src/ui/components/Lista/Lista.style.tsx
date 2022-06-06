@@ -12,7 +12,7 @@ export const ItemListaStyle = styled("li")`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: ${({ theme }) => theme.spacing(2)};
-  margin-bottom: ${({ theme }) => theme.spacing};
+  margin-bottom: ${({ theme }) => theme.spacing(6)};
   // breakpoint já definido no tema
   ${({ theme }) => theme.breakpoints.down("md")} {
     grid-template-columns: 1fr;
