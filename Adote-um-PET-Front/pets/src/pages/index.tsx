@@ -8,8 +8,22 @@ import {
   Button,
   Snackbar,
 } from "@mui/material";
+import useIndex from "../data/hooks/pages/useIndex";
 
 const Home: NextPage = () => {
+  const {
+    listaPets,
+    petSelecionado,
+    setPetSelecionado,
+    email,
+    setEmail,
+    valor,
+    setValor,
+    mensagem,
+    setMensagem,
+    adotar,
+  } = useIndex();
+
   return (
     <>
       <div>
@@ -23,40 +37,44 @@ const Home: NextPage = () => {
           }
         />
 
-        <Lista
-          pets={[
-            {
-              id: 1,
-              nome: "Bobby",
-              historia:
-                "Um cachorro muito bem cuidado e...... Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi ullam ex ducimus, deleniti architecto, saepe eligendi consequatur amet, atque perferendis quod unde quae! Ipsa magni fugit debitis omnis consequatur rem!",
-              foto: "https://veja.abril.com.br/wp-content/uploads/2017/01/cao-labrador-3-copy.jpg",
-            },
-            {
-              id: 2,
-              nome: "Scobby",
-              historia: "Cachorro cheiroso e alegre",
-              foto: "https://veja.abril.com.br/wp-content/uploads/2017/01/cao-labrador-3-copy.jpg",
-            },
-          ]}
-        />
+        <Lista pets={listaPets} onAdotar={(pet) => setPetSelecionado(pet)} />
         {/* sx viabiliza o uso do css */}
-        <Dialog open={false} fullWidth PaperProps={{ sx: { padding: "40px" } }}>
+        <Dialog
+          open={petSelecionado != null}
+          fullWidth
+          PaperProps={{ sx: { padding: "40px" } }}
+          onClose={() => setPetSelecionado(null)}
+        >
           <TextField
             label={"E-mail"}
             type={"email"}
             sx={{ pb: "10px" }}
             fullWidth
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
-          <TextField label={"Quantia por mês"} type={"number"} fullWidth />
+          <TextField
+            label={"Quantia por mês"}
+            type={"number"}
+            fullWidth
+            value={valor}
+            onChange={(event) => setValor(event.target.value)}
+          />
 
           <DialogActions>
-            <Button>Cancelar</Button>
-            <Button variant={"contained"}>Confirmar adoção</Button>
+            <Button onClick={() => setPetSelecionado(null)}>Cancelar</Button>
+            <Button variant={"contained"} onClick={() => adotar()}>
+              Confirmar adoção
+            </Button>
           </DialogActions>
         </Dialog>
 
-        <Snackbar open={false} message={"Você acaba de adotar um animal"} />
+        <Snackbar
+          open={mensagem.length > 0}
+          message={mensagem}
+          autoHideDuration={3000}
+          onClose={() => setMensagem("")}
+        />
       </div>
     </>
   );
