@@ -11,6 +11,7 @@ import { Pet } from "../../../data/@types/Pet";
 import { TextService } from "../../../data/services/TextService";
 interface ListaProps {
   pets: Pet[];
+  onAdotar: (pet: Pet) => void;
 }
 
 function Lista(props: ListaProps) {
@@ -28,7 +29,11 @@ function Lista(props: ListaProps) {
                 {TextService.limitaTexto(pet.historia, limiteTexto)}
               </DescricaoStyle>
 
-              <Button variant={"contained"} fullWidth>
+              <Button
+                variant={"contained"}
+                onClick={() => props.onAdotar(pet)}
+                fullWidth
+              >
                 Adotar {pet.nome}
               </Button>
             </CaixaInformacoes>
