@@ -7,7 +7,6 @@ import Cabecalho from "../ui/components/Cabecalho/Cabecalho";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
-      Opaaa
       <ThemeProvider theme={theme}>
         <Cabecalho />
         <Component {...pageProps} />
