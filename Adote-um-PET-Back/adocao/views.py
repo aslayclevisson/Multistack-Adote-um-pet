@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 from .models import Adocao
 from .serializers import AdocaoSerializer
+from .services.email_service import encaminha_email_adocao
 
 
 # Create your views here.
@@ -30,9 +31,10 @@ class AdocaoCreate(APIView):
         serializer = AdocaoSerializer(data=data)
 
         if serializer.is_valid():
-            serializer.save()
-
+            adocao = serializer.save()
+            encaminha_email_adocao(adocao)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(
             {
                 "errors": serializer.errors,
