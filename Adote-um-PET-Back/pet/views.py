@@ -13,6 +13,22 @@ class PetList(APIView):  # List se usa quando retorna uma lista de dados
         serializer = PetSerializer(pets, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def post(self, request, format=None):
+        data = request.data
+        serializer = PetSerializer(data=data)
+
+        if serializer.is_valid():
+            pet = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(
+            {
+                "errors": serializer.errors,
+                "message": "Houveram erros durante o cadastro do pet.",
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+
 
 class PetDetail(APIView):
     def get(self, request, pk, format=None):
